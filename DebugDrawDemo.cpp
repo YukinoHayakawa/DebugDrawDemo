@@ -18,6 +18,5 @@ usagi::DebugDrawDemo::DebugDrawDemo(std::shared_ptr<Runtime> runtime)
     );
     setupRenderTargets(true);
 
-    mStateManager->pushState(mStateManager->addChild<DebugDrawGameState>(
-        "DebugDraw", this));
+    mStateManager->pushState<DebugDrawGameState>("DebugDraw", this);
 }
