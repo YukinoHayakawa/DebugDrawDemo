@@ -17,7 +17,7 @@
 void usagi::DebugDrawGameState::setupInput()
 {
     const auto mouse = mGame->runtime()->inputManager()->virtualMouse();
-    mouse->addEventListener(&mInputMap);
+    mouse->addEventListener(mInputMap);
     mouse->addEventListener(this);
 }
 
@@ -29,10 +29,13 @@ void usagi::DebugDrawGameState::setupCamera()
         std::make_shared<ModelViewCameraController>(
             Vector3f::Zero(), 10.f
         ));
-    mInputMap.addAnalogAction2D("Camera:Move", partial_apply(
+
+    auto camact = mInputMap->addActionGroup("Camera");
+    camact->setAnalogAction2DHandler("Move", partial_apply(
         &ModelViewCameraController::rotate,
         mCameraElement->cameraController()));
-    mInputMap.bindMouseRelativeMovement("Camera:Move");
+    camact->bindMouseRelativeMovement("Move");
+    camact->activate();
 }
 
 usagi::DebugDrawGameState::DebugDrawGameState(
@@ -54,6 +57,7 @@ usagi::DebugDrawGameState::DebugDrawGameState(
     });
     mDebugDrawRoot = addChild("DebugDrawRoot");
     mDebugDrawRoot->addComponent<DebugDrawDemoComponent>();
+    mInputMap = addChild<InputMapping>("InputMapping");
 
     setupInput();
     setupCamera();
@@ -62,7 +66,7 @@ usagi::DebugDrawGameState::DebugDrawGameState(
 usagi::DebugDrawGameState::~DebugDrawGameState()
 {
     const auto mouse = mGame->runtime()->inputManager()->virtualMouse();
-    mouse->removeEventListener(&mInputMap);
+    mouse->removeEventListener(mInputMap);
     mouse->removeEventListener(this);
 }
 
@@ -77,9 +81,13 @@ void usagi::DebugDrawGameState::update(const Clock &clock)
     GraphicalGameState::update(clock);
 }
 
-void usagi::DebugDrawGameState::onMouseButtonStateChange(
+bool usagi::DebugDrawGameState::onMouseButtonStateChange(
     const MouseButtonEvent &e)
 {
     if(e.button == MouseButtonCode::RIGHT)
+    {
         e.mouse->setImmersiveMode(e.pressed);
+        return true;
+    }
+    return false;
 }

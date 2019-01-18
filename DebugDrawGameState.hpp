@@ -18,7 +18,7 @@ class DebugDrawGameState
     using ModelCameraMan =
         CameraMan<PerspectiveCamera, ModelViewCameraController>;
     ModelCameraMan *mCameraElement = nullptr;
-    InputMapping mInputMap;
+    InputMapping *mInputMap = nullptr;
 
     void setupInput();
     void setupCamera();
@@ -28,6 +28,6 @@ public:
     ~DebugDrawGameState();
 
     void update(const Clock &clock) override;
-    void onMouseButtonStateChange(const MouseButtonEvent &e) override;
+    bool onMouseButtonStateChange(const MouseButtonEvent &e) override;
 };
 }
