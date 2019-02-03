@@ -25,7 +25,6 @@ class DebugDrawGameState
 
 public:
     DebugDrawGameState(Element *parent, std::string name, GraphicalGame *game);
-    ~DebugDrawGameState();
 
     void update(const Clock &clock) override;
     bool onMouseButtonStateChange(const MouseButtonEvent &e) override;

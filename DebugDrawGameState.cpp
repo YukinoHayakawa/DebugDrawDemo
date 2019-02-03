@@ -30,12 +30,12 @@ void usagi::DebugDrawGameState::setupCamera()
             Vector3f::Zero(), 10.f
         ));
 
-    auto camact = mInputMap->addActionGroup("Camera");
-    camact->setAnalogAction2DHandler("Move", partial_apply(
+    auto cam_actions = mInputMap->addActionGroup("Camera");
+    cam_actions->setAnalogAction2DHandler("Move", partial_apply(
         &ModelViewCameraController::rotate,
         mCameraElement->cameraController()));
-    camact->bindMouseRelativeMovement("Move");
-    camact->activate();
+    cam_actions->bindMouseRelativeMovement("Move");
+    cam_actions->activate();
 }
 
 usagi::DebugDrawGameState::DebugDrawGameState(
@@ -61,13 +61,6 @@ usagi::DebugDrawGameState::DebugDrawGameState(
 
     setupInput();
     setupCamera();
-}
-
-usagi::DebugDrawGameState::~DebugDrawGameState()
-{
-    const auto mouse = mGame->runtime()->inputManager()->virtualMouse();
-    mouse->removeEventListener(mInputMap);
-    mouse->removeEventListener(this);
 }
 
 void usagi::DebugDrawGameState::update(const Clock &clock)
