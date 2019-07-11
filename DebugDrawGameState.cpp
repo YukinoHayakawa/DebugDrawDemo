@@ -11,7 +11,7 @@
 #include <Usagi/Transform/TransformComponent.hpp>
 #include <Usagi/Utility/Functional.hpp>
 
-#include <Usagi/Extension/DebugDraw/DebugDrawSubsystem.hpp>
+#include <Usagi/Extension/DebugDraw/DebugDrawSystem.hpp>
 #include "DebugDrawDemoComponent.hpp"
 
 void usagi::DebugDrawGameState::setupInput()
@@ -44,11 +44,11 @@ usagi::DebugDrawGameState::DebugDrawGameState(
     GraphicalGame *game)
     : GraphicalGameState(parent, std::move(name), game)
 {
-    // this RenderableSubsystem will be registered by subsystemFilter()
+    // this RenderableSystem will be registered by subsystemFilter()
     // of GraphicalGameState
-    const auto dd = addSubsystem(
+    const auto dd = addSystem(
         "dd",
-        std::make_unique<DebugDrawSubsystem>(game));
+        std::make_unique<DebugDrawSystem>(game));
     dd->setSizeFunctionsFromRenderWindow(mGame->mainWindow());
     dd->setWorldToNdcFunc([=]() {
         // world -> camera local -> NDC
@@ -67,9 +67,9 @@ void usagi::DebugDrawGameState::update(const Clock &clock)
 {
     // todo better way?
     mCameraElement->camera()->setPerspective(
+        { 1920, 1080 },
         degreesToRadians(90.f),
-        mGame->mainWindow()->swapchain->aspectRatio(),
-        0.5f, 100.f);
+        mGame->mainWindow()->swapchain->aspectRatio(), 0.5f, 100.f);
 
     GraphicalGameState::update(clock);
 }

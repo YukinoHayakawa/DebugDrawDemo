@@ -6,7 +6,7 @@
 
 namespace usagi
 {
-class DebugDrawSubsystem;
+class DebugDrawSystem;
 class PerspectiveCamera;
 class ModelViewCameraController;
 
