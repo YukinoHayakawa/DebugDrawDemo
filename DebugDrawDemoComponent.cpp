@@ -1,6 +1,6 @@
 ﻿#include "DebugDrawDemoComponent.hpp"
 
-#include <Usagi/Core/Math.hpp>
+#include <Usagi/Math/Matrix.hpp>
 
 void usagi::DebugDrawDemoComponent::draw(dd::ContextHandle ctx)
 {

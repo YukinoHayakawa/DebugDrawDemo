@@ -10,6 +10,7 @@
 #include <Usagi/Runtime/Runtime.hpp>
 #include <Usagi/Transform/TransformComponent.hpp>
 #include <Usagi/Utility/Functional.hpp>
+#include <Usagi/Math/Angle.hpp>
 
 #include <Usagi/Extension/DebugDraw/DebugDrawSystem.hpp>
 #include "DebugDrawDemoComponent.hpp"
